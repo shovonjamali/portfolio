@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Modern CSS Reset and Variables */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        /* Modern Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #fff 0%, #f3f4f6 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            /* text-align: justify;
+            text-justify: inter-word; */
+        }
+
+        .hero-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Resume Download Section */
+        .resume-section {
+            padding: 2rem;
+            text-align: center;
+            background: white;
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .resume-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            transition: var(--transition);
+        }
+
+        .resume-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .resume-btn i {
+            margin-right: 0.5rem;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            color: var(--dark);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .project-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 6rem 2rem;
+            background: var(--light);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Experience & Education Section */
+        .timeline-section {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 1rem;
+            position: relative;
+            width: 50%;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border: 4px solid white;
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 3rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 3rem;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-date {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .timeline-subtitle {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-container::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 5rem;
+                padding-right: 1rem;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 21px;
+            }
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 3rem 2rem;
+            background: var(--dark);
+            color: white;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Portfolio</a>
+            <div class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#resume" class="nav-link">Resume</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#education" class="nav-link">Education</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="about" class="hero">
+        <div class="hero-content">
+            <img src="images/about/jobaidul.png" alt="Profile" class="hero-image">
+            <h1>Hello, I'm Jobaidul Alam Jamali</h1>
+            <div style="text-align: justify;">
+                <p>Exploring the synergy between data and intelligence, I specialize in transforming raw information into powerful AI-driven solutions. With expertise in machine learning, generative AI, and optimization, I thrive at the intersection of research and real-world application. My background in full-stack development equips me with the skills to deploy scalable models, visualize complex data, and bridge the gap between theory and implementation. Fueled by curiosity and innovation, I'm always seeking new ways to push the boundaries of AI and create technology that makes a difference.</p>
+                <!-- <br/>
+                <p>My background in full-stack development equips me with the skills to deploy scalable models, visualize complex data, and bridge the gap between theory and implementation.</p><br/>
+                <p>Fueled by curiosity and innovation, I'm always seeking new ways to push the boundaries of AI and create technology that makes a difference.</p> -->
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Resume Download Section -->
+    <section id="resume" class="resume-section">
+        <div class="container">
+            <a href="https://drive.google.com/file/d/1GP7hov3t-jgt9pH0At98LjWMCDq0OWeb/view?usp=sharing" target="_blank" class="resume-btn">
+                <i class="fas fa-file-download"></i> Download Resume
+            </a>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <img src="images/projects/DanTTS.jpeg" alt="Danish TTS" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Danish TTS</h3>
+                    <p>Zero-Shot Danish Voice Cloning with translation pipeline for Healthcare.</p>
+                    <div class="project-buttons">
+                        <a href="project1.html" class="btn btn-primary">View Project</a>
+                        <a href="https://github.com/shovonjamali/DanTTS" target="_blank"  class="btn btn-secondary">Source Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <img src="images/projects/sustainable-farm.jpg" alt="Sustainable Farm" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Sustainable Farm Dashboard</h3>
+                    <p>Estimates net greenhouse gas emissions from livestock farms using IPCC methodologies.</p>
+                    <div class="project-buttons">
+                        <a href="project2.html" class="btn btn-primary">View Project</a>
+                        <a href="https://github.com/shovonjamali/renewal-ranch" target="_blank"  class="btn btn-secondary">Source Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <img src="images/projects/pm-copilot.jpeg" alt="Project management copilot" class="project-image">
+                <div class="project-content">
+                    <h3 class="project-title">Project Management Copilot</h3>
+                    <p>Multi-Modal RAG-Based project management assistant.</p>
+                    <div class="project-buttons">
+                        <a href="project3.html" class="btn btn-primary">View Project</a>
+                        <!-- <a href="#" class="btn btn-secondary">Source Code</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+            <!-- Skill 1 -->
+            <div class="skill-card">
+                <i class="fab fa-python skill-icon"></i>
+                <h3>Python</h3>
+                <p>Advanced data analysis, machine learning, and automation within the Python ecosystem.</p>
+            </div>
+
+            <!-- Skill 2 -->
+            <div class="skill-card">
+                <i class="fas fa-chart-line skill-icon"></i>
+                <h3>Data Science</h3>
+                <p>Extracting insights from data using statistical analysis, predictive modeling, deep learning, and transger learning techniques for complex problem-solving.</p>
+            </div>
+
+            <!-- Skill 3 -->
+            <div class="skill-card">
+                <i class="fas fa-robot skill-icon"></i>
+                <h3>Machine Learning</h3>
+                <p>End-to-end model development, deployment, experimentation, and monitoring for real-world applications.</p>
+            </div>
+            
+
+            <!-- Skill 4 -->
+            <div class="skill-card">
+                <i class="fas fa-database skill-icon"></i>
+                <h3>SQL</h3>
+                <p>Efficient database design, query optimization, and data extraction for analytics.</p>
+            </div>
+
+            <!-- Skill 5 -->
+            <div class="skill-card">
+                <i class="fas fa-chart-bar skill-icon"></i>
+                <h3>Data Visualization</h3>
+                <p>Designing insightful, interactive visualizations to uncover trends and patterns.</p>
+            </div>
+
+            <!-- Skill 6 -->
+            <div class="skill-card">
+                <i class="fas fa-laptop-code skill-icon"></i>
+                <h3>Data Storytelling</h3>
+                <p>Communicating complex insights through compelling, data-driven narratives.</p>
+            </div>
+
+            <!-- Skill 7 -->
+            <div class="skill-card">
+                <i class="fas fa-brain skill-icon"></i>
+                <h3>Generative AI</h3>
+                <p>Fine-tuning LLMs, RAG pipelines, embeddings, semantic search, and prompt engineering for AI-driven solutions.</p>
+            </div>
+
+            <!-- Skill 8 -->
+            <div class="skill-card">
+                <i class="fas fa-cloud skill-icon"></i>
+                <h3>Cloud and DevOps</h3>
+                <p>Building scalable, cloud-native applications with CI/CD, containerization, and infrastructure automation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="timeline-section">
+        <h2 class="section-title">Experience</h2>
+        <div class="timeline-container">
+            <!-- Experience 1 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">September 2024 - Present</div>
+                    <h3 class="timeline-title">Teaching Assistant</h3>
+                    <div class="timeline-subtitle">University of Southern Denmark, Odense, Denmark</div>
+                    <p>Guided 50+ master's students in Data-Driven Decision Making and Applied Machine Learning, covering topics from classical ML to deep learning. Planned and delivered 3 Kaggle competitions and 8+ exercises in Python, TensorFlow, and R, focusing on core ML concepts and reproducibility with Weights & Biases.</p>
+                </div>
+            </div>
+
+            <!-- Experience 2 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">July 2024 - October 2024</div>
+                    <h3 class="timeline-title">Generative AI Full-Stack Developer Intern</h3>
+                    <div class="timeline-subtitle">Mesh Firm, Copenhagen, Denmark</div>
+                    <p>Engineered a RAG-based project management app, fine-tuned LLM, optimizing ETL pipelines and data integrations with vector db and relational database. Contributed to the back-end and the front-end improvements.</p>
+                </div>
+            </div>
+
+            <!-- Experience 3 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">June 2016 - August 2022</div>
+                    <h3 class="timeline-title">Senior Software Engineer</h3>
+                    <div class="timeline-subtitle">Genweb2, Dhaka, Bangladesh</div>
+                    <p>Developed enterprise applications using .NET, React, and TypeScript, ensuring Agile-driven development and CI/CD best practices. Led end-to-end automation for 5+ business processes with Power Platform and Azure, implemented scalable microservices, and contributed to a computer vision-based Bangla sign language application. Hired developers and authored comprehensive documentation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="timeline-section" style="background: var(--light);">
+        <h2 class="section-title">Education</h2>
+        <div class="timeline-container">
+            <!-- Education 1 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">September 2022 - December 2024</div>
+                    <h3 class="timeline-title">Masters in Computer Science</h3>
+                    <div class="timeline-subtitle">University of Southern Denmark, Odense, Denmark</div>
+                    <p>Cumulative GPA: 9.40/12.0. Specialized in data science, machine learning, deep learning, and statistical analysis.</p>
+                </div>
+            </div>
+
+            <!-- Education 2 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">February 2010 - April 2014</div>
+                    <h3 class="timeline-title">Bachelor in Computer Science and Engineering</h3>
+                    <div class="timeline-subtitle">United International University, Dhaka, Bangladesh</div>
+                    <p style="text-align: justify;">Cumulative GPA: 3.80/4.0. Focus on algorithms, data structures, object-oriented programming, computer architecture, and software engineering.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Get in Touch</h2>
+            <p>Feel free to reach out for collaborations or just a friendly hello</p>
+            <p>shovonjamali@gmail.com • +45 5268 8998</p>
+            <p>Odense, Denmark</p>
+            <div class="social-links">
+                <a href="https://linkedin.com/in/jobaidul-jamali" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/shovonjamali" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="https://www.kaggle.com/shovonjamali" class="social-link"><i class="fab fa-kaggle"></i></a>
+                <!-- <a href="#" class="social-link"><i class="fab fa-twitter"></i></a> -->
+                <!-- <a href="#" class="social-link"><i class="fab fa-medium"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a> -->
+            </div>
+        </div>
+    </section>
+</body>
+</html>
