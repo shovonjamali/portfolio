@@ -350,6 +350,327 @@
             margin-bottom: 1rem;
         }
 
+        /* Add this to your existing CSS */
+        .about-section, .projects-section, .skills-section {
+            background-color: rgba(255, 255, 255, 0.85); /* semi-transparent white */
+        }
+        .contact-section {
+            background-color: rgba(52, 58, 64, 0.9); /* semi-transparent dark */
+        }
+
+        /* Ensure sections allow particles to be visible through them */
+        .hero, .projects, .skills, .timeline-section {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.7) !important; /* More transparent */
+        }
+        
+        .contact {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(31, 41, 55, 0.8) !important; /* More transparent dark */
+        }
+
+        /* Typewriter effect styling */
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid var(--primary); /* Cursor */
+            white-space: normal;
+            margin: 0 auto;
+            letter-spacing: 0.15em;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        /* The typewriter cursor animation */
+        @keyframes blink-caret {
+            from, to { border-right-color: transparent }
+            50% { border-right-color: var(--primary) }
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hidden elements start with opacity 0 */
+        .fade-in {
+            opacity: 0;
+        }
+
+        /* When the .fade-in-visible class is added, animate the element */
+        .fade-in-visible {
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        .loader {
+            text-align: center;
+        }
+
+        .loader svg {
+            width: 80px;
+            height: 80px;
+            transform: rotate(-90deg);
+        }
+
+        .loader-text {
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: 10px;
+            color: var(--primary);
+        }
+
+        #loader-circle {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 4;
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: dash 2s ease-in-out infinite;
+        }
+
+        @keyframes dash {
+            0% {
+                stroke-dashoffset: 200;
+            }
+            50% {
+                stroke-dashoffset: 0;
+            }
+            100% {
+                stroke-dashoffset: -200;
+            }
+        }
+
+        .dots {
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% {
+                content: ".";
+            }
+            40% {
+                content: "..";
+            }
+            60%, 100% {
+                content: "...";
+            }
+        }
+
+        /* Social Icons Animation */
+        .social-link {
+            position: relative;
+            transition: transform 0.3s, color 0.3s, background-color 0.3s;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: -1;
+        } */
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            background-color: white;
+            color: var(--primary); /* This will make the icons blue on white background */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* .social-link:hover::before {
+            transform: scale(1);
+        } */
+
+        /* Add a pulse animation to draw attention */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
+        }
+
+        /* Apply the pulse animation to one icon at a time with delays */
+        .social-link:nth-child(1) {
+            animation: pulse 2s infinite;
+        }
+
+        .social-link:nth-child(2) {
+            animation: pulse 2s infinite 0.5s;
+        }
+
+        .social-link:nth-child(3) {
+            animation: pulse 2s infinite 1s;
+        }
+
+        /* Optional: Add tooltip on hover */
+        .social-tooltip {
+            position: relative;
+        }
+
+        .social-tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .social-tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Timeline animations */
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .timeline-item:nth-child(even) {
+            transform: translateX(50px);
+        }
+
+        .timeline-item.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Animate the timeline line */
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 1.5s ease;
+        }
+
+        .timeline-container.animate::after {
+            transform: scaleY(1);
+        }
+
+        /* Animate the circles */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border: 4px solid white;
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+            opacity: 0;
+            transform: scale(0);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition-delay: 0.5s;
+        }
+
+        .timeline-item.animate::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Hero image styling */
+        .hero-image-container {
+            perspective: 1000px;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .hero-image-flipper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .hero-image-container:hover .hero-image-flipper {
+            transform: rotateY(180deg);
+        }
+
+        .hero-image-front, .hero-image-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 50%;
+        }
+
+        .hero-image-front {
+            background: url('images/about/jobaidul.png') center/cover;
+        }
+
+        .hero-image-back {
+            background-color: var(--primary);
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+        }
+
         @media (max-width: 768px) {
             .timeline-container::after {
                 left: 31px;
@@ -415,6 +736,19 @@
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="loader">
+          <svg viewBox="0 0 80 80">
+            <circle id="loader-circle" cx="40" cy="40" r="32"></circle>
+          </svg>
+          <div class="loader-text">Loading<span class="dots">...</span></div>
+        </div>
+    </div>
+
+    <!-- This div will contain the particles animation -->
+    <div id="particles-js" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; pointer-events: none; background-color: rgba(0,0,0,0.02);"></div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -432,12 +766,20 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="about" class="hero">
+    <section id="about" class="hero fade-in">
         <div class="hero-content">
-            <img src="images/about/jobaidul.png" alt="Profile" class="hero-image">
+            <!-- <img src="images/about/jobaidul.png" alt="Profile" class="hero-image"> -->
+            <div class="hero-image-container">
+                <div class="hero-image-flipper">
+                  <div class="hero-image-front"></div>
+                  <div class="hero-image-back">Data Scientist & ML Engineer</div>
+                </div>
+            </div>
             <h1>Hello, I'm Jobaidul Alam Jamali</h1>
             <div style="text-align: justify;">
-                <p>Exploring the synergy between data and intelligence, I specialize in transforming raw information into powerful AI-driven solutions. With expertise in machine learning, generative AI, and optimization, I thrive at the intersection of research and real-world application. My background in full-stack development equips me with the skills to deploy scalable models, visualize complex data, and bridge the gap between theory and implementation. Fueled by curiosity and innovation, I'm always seeking new ways to push the boundaries of AI and create technology that makes a difference.</p>
+                <!-- For the typewriter effect -->
+                <div id="typewriter" class="typewriter" style="text-align: justify; min-height: 150px;"></div>
+                <!-- <p>Exploring the synergy between data and intelligence, I specialize in transforming raw information into powerful AI-driven solutions. With expertise in machine learning, generative AI, and optimization, I thrive at the intersection of research and real-world application. My background in full-stack development equips me with the skills to deploy scalable models, visualize complex data, and bridge the gap between theory and implementation. Fueled by curiosity and innovation, I'm always seeking new ways to push the boundaries of AI and create technology that makes a difference.</p> -->
                 <!-- <br/>
                 <p>My background in full-stack development equips me with the skills to deploy scalable models, visualize complex data, and bridge the gap between theory and implementation.</p><br/>
                 <p>Fueled by curiosity and innovation, I'm always seeking new ways to push the boundaries of AI and create technology that makes a difference.</p> -->
@@ -447,7 +789,7 @@
     </section>
 
     <!-- Resume Download Section -->
-    <section id="resume" class="resume-section">
+    <section id="resume" class="resume-section fade-in">
         <div class="container">
             <a href="https://drive.google.com/file/d/1GP7hov3t-jgt9pH0At98LjWMCDq0OWeb/view?usp=sharing" target="_blank" class="resume-btn">
                 <i class="fas fa-file-download"></i> Download Resume
@@ -456,7 +798,7 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="projects">
+    <section id="projects" class="projects fade-in">
         <h2 class="section-title">Featured Projects</h2>
         <div class="projects-grid">
             <!-- Project 1 -->
@@ -501,7 +843,7 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="skills">
+    <section id="skills" class="skills fade-in">
         <h2 class="section-title">Skills</h2>
         <div class="skills-grid">
             <!-- Skill 1 -->
@@ -564,7 +906,7 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="timeline-section">
+    <section id="experience" class="timeline-section fade-in">
         <h2 class="section-title">Experience</h2>
         <div class="timeline-container">
             <!-- Experience 1 -->
@@ -601,7 +943,7 @@
     </section>
 
     <!-- Education Section -->
-    <section id="education" class="timeline-section" style="background: var(--light);">
+    <section id="education" class="timeline-section fade-in" style="background: var(--light);">
         <h2 class="section-title">Education</h2>
         <div class="timeline-container">
             <!-- Education 1 -->
@@ -627,21 +969,171 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <section id="contact" class="contact fade-in">
         <div class="container">
             <h2 class="section-title" style="color: white;">Get in Touch</h2>
             <p>Feel free to reach out for collaborations or just a friendly hello</p>
             <p>shovonjamali@gmail.com • +45 5268 8998</p>
             <p>Odense, Denmark</p>
-            <div class="social-links">
+            <!-- <div class="social-links">
                 <a href="https://linkedin.com/in/jobaidul-jamali" class="social-link"><i class="fab fa-linkedin"></i></a>
                 <a href="https://github.com/shovonjamali" class="social-link"><i class="fab fa-github"></i></a>
                 <a href="https://www.kaggle.com/shovonjamali" class="social-link"><i class="fab fa-kaggle"></i></a>
-                <!-- <a href="#" class="social-link"><i class="fab fa-twitter"></i></a> -->
-                <!-- <a href="#" class="social-link"><i class="fab fa-medium"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a> -->
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-medium"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            </div> -->
+            <div class="social-links">
+                <a href="https://linkedin.com/in/jobaidul-jamali" class="social-link social-tooltip" data-tooltip="LinkedIn">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/shovonjamali" class="social-link social-tooltip" data-tooltip="GitHub">
+                  <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.kaggle.com/shovonjamali" class="social-link social-tooltip" data-tooltip="Kaggle">
+                  <i class="fab fa-kaggle"></i>
+                </a>
             </div>
         </div>
     </section>
+
+    <!-- Loading particles.js script from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Function to check if an element is in the viewport
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8
+            );
+        }
+        
+        // Function to handle scroll events
+        function handleScroll() {
+            console.log("Scroll event fired");
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            fadeElements.forEach(element => {
+            if (isElementInViewport(element) && !element.classList.contains('fade-in-visible')) {
+                element.classList.add('fade-in-visible');
+            }
+            });
+        }
+  
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Function to animate timeline when it comes into view
+        function animateTimeline() {
+            const timelineContainers = document.querySelectorAll('.timeline-container');
+            
+            timelineContainers.forEach(container => {
+                // Create an observer for the timeline container
+                const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                    // Animate the timeline line first
+                    container.classList.add('animate');
+                    
+                    // Then animate each item with a delay
+                    const items = container.querySelectorAll('.timeline-item');
+                    items.forEach((item, index) => {
+                        setTimeout(() => {
+                        item.classList.add('animate');
+                        }, 500 + (index * 300)); // 500ms initial delay, then 300ms between items
+                    });
+                    
+                    // Unobserve after animation is triggered
+                    observer.unobserve(entry.target);
+                    }
+                });
+                }, { threshold: 0.2 }); // Trigger when 20% of the timeline is visible
+                
+                observer.observe(container);
+            });
+        }
+
+        window.onload = function() {
+            // Hide the preloader once the page is loaded
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                // Give a small delay to make the loading animation visible
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                }, 500);
+            }
+
+            console.log("Window loaded, initializing particles");
+            
+            handleScroll();
+
+            // Particle JS animations
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#2563eb" }, // Your primary blue
+                    shape: { type: "circle" },
+                    opacity: { value: 0.7, random: false },
+                    size: { value: 4, random: true }, // Slightly larger
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#2563eb", // Matching blue
+                        opacity: 0.5,
+                        width: 1.5
+                    },
+                    move: { enable: true, speed: 2, direction: "none", random: false }
+                    },
+                    interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "grab" },
+                        onclick: { enable: true, mode: "push" }
+                    },
+                    modes: {
+                        grab: { distance: 140, line_linked: { opacity: 1 } },
+                        push: { particles_nb: 4 }
+                    }
+                    },
+                    retina_detect: true
+                });
+                console.log("Particles initialized successfully");
+            } else {
+                console.error("particlesJS is not available");
+            }
+
+            // Typewriter effect
+            // The text you want to display with the typewriter effect
+            const text = "Exploring the synergy between data and intelligence, I specialize in transforming raw information into powerful AI-driven solutions. With expertise in machine learning, generative AI, and optimization, I thrive at the intersection of research and real-world application. My background in full-stack development equips me with the skills to deploy scalable models, visualize complex data, and bridge the gap between theory and implementation. Fueled by curiosity and innovation, I'm always seeking new ways to push the boundaries of AI and create technology that makes a difference.";
+            
+            // Get the element where we'll display the typewriter effect
+            const typewriterElement = document.getElementById('typewriter');
+            
+            // Initialize variables
+            let i = 0;
+            const speed = 20; // Speed in milliseconds (lower = faster)
+            
+            // Function to type the text
+            function typeWriter() {
+                if (i < text.length) {
+                    typewriterElement.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                } else {
+                    // Remove the blinking cursor when typing is complete
+                    typewriterElement.style.borderRight = 'none';
+                }
+            }
+            
+            // Start the typewriter effect
+            typeWriter();
+
+            // Call the timeline animation function
+            animateTimeline();
+
+        };
+    </script>
 </body>
 </html>
